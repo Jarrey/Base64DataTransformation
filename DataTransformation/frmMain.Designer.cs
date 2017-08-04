@@ -31,6 +31,8 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
       this.tabTop = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
+      this.lblPassword = new System.Windows.Forms.Label();
+      this.txtPassword = new System.Windows.Forms.TextBox();
       this.chkSaveDraftMail = new System.Windows.Forms.CheckBox();
       this.chkSaveTxtFile = new System.Windows.Forms.CheckBox();
       this.chkClipboard = new System.Windows.Forms.CheckBox();
@@ -41,11 +43,16 @@
       this.txtData = new System.Windows.Forms.TextBox();
       this.btnOpenFile = new System.Windows.Forms.Button();
       this.tabPage2 = new System.Windows.Forms.TabPage();
+      this.lblDePassword = new System.Windows.Forms.Label();
+      this.txtDePassword = new System.Windows.Forms.TextBox();
+      this.btnClear = new System.Windows.Forms.Button();
       this.lblGo = new System.Windows.Forms.Label();
       this.btnOpen = new System.Windows.Forms.Button();
       this.txtEncodedData = new System.Windows.Forms.TextBox();
       this.btnShow = new System.Windows.Forms.Button();
-      this.btnClear = new System.Windows.Forms.Button();
+      this.cmbMailDrafts = new System.Windows.Forms.ComboBox();
+      this.lblDraftList = new System.Windows.Forms.Label();
+      this.btnRefreshMailDrafts = new System.Windows.Forms.Button();
       this.tabTop.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.tabPage2.SuspendLayout();
@@ -64,6 +71,8 @@
       // 
       // tabPage1
       // 
+      this.tabPage1.Controls.Add(this.lblPassword);
+      this.tabPage1.Controls.Add(this.txtPassword);
       this.tabPage1.Controls.Add(this.chkSaveDraftMail);
       this.tabPage1.Controls.Add(this.chkSaveTxtFile);
       this.tabPage1.Controls.Add(this.chkClipboard);
@@ -81,12 +90,31 @@
       this.tabPage1.Text = "Package";
       this.tabPage1.UseVisualStyleBackColor = true;
       // 
+      // lblPassword
+      // 
+      this.lblPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.lblPassword.AutoSize = true;
+      this.lblPassword.Location = new System.Drawing.Point(406, 76);
+      this.lblPassword.Name = "lblPassword";
+      this.lblPassword.Size = new System.Drawing.Size(56, 13);
+      this.lblPassword.TabIndex = 6;
+      this.lblPassword.Text = "Password:";
+      // 
+      // txtPassword
+      // 
+      this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.txtPassword.Location = new System.Drawing.Point(468, 72);
+      this.txtPassword.Name = "txtPassword";
+      this.txtPassword.Size = new System.Drawing.Size(123, 20);
+      this.txtPassword.TabIndex = 5;
+      this.txtPassword.UseSystemPasswordChar = true;
+      // 
       // chkSaveDraftMail
       // 
       this.chkSaveDraftMail.AutoSize = true;
       this.chkSaveDraftMail.Checked = true;
       this.chkSaveDraftMail.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chkSaveDraftMail.Location = new System.Drawing.Point(234, 74);
+      this.chkSaveDraftMail.Location = new System.Drawing.Point(254, 74);
       this.chkSaveDraftMail.Name = "chkSaveDraftMail";
       this.chkSaveDraftMail.Size = new System.Drawing.Size(110, 17);
       this.chkSaveDraftMail.TabIndex = 4;
@@ -96,7 +124,7 @@
       // chkSaveTxtFile
       // 
       this.chkSaveTxtFile.AutoSize = true;
-      this.chkSaveTxtFile.Location = new System.Drawing.Point(123, 74);
+      this.chkSaveTxtFile.Location = new System.Drawing.Point(133, 74);
       this.chkSaveTxtFile.Name = "chkSaveTxtFile";
       this.chkSaveTxtFile.Size = new System.Drawing.Size(105, 17);
       this.chkSaveTxtFile.TabIndex = 4;
@@ -180,6 +208,11 @@
       // 
       // tabPage2
       // 
+      this.tabPage2.Controls.Add(this.btnRefreshMailDrafts);
+      this.tabPage2.Controls.Add(this.lblDraftList);
+      this.tabPage2.Controls.Add(this.cmbMailDrafts);
+      this.tabPage2.Controls.Add(this.lblDePassword);
+      this.tabPage2.Controls.Add(this.txtDePassword);
       this.tabPage2.Controls.Add(this.btnClear);
       this.tabPage2.Controls.Add(this.lblGo);
       this.tabPage2.Controls.Add(this.btnOpen);
@@ -193,11 +226,41 @@
       this.tabPage2.Text = "Un-package";
       this.tabPage2.UseVisualStyleBackColor = true;
       // 
+      // lblDePassword
+      // 
+      this.lblDePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.lblDePassword.AutoSize = true;
+      this.lblDePassword.Location = new System.Drawing.Point(119, 460);
+      this.lblDePassword.Name = "lblDePassword";
+      this.lblDePassword.Size = new System.Drawing.Size(56, 13);
+      this.lblDePassword.TabIndex = 8;
+      this.lblDePassword.Text = "Password:";
+      // 
+      // txtDePassword
+      // 
+      this.txtDePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.txtDePassword.Location = new System.Drawing.Point(182, 456);
+      this.txtDePassword.Name = "txtDePassword";
+      this.txtDePassword.Size = new System.Drawing.Size(123, 20);
+      this.txtDePassword.TabIndex = 7;
+      this.txtDePassword.UseSystemPasswordChar = true;
+      // 
+      // btnClear
+      // 
+      this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.btnClear.Location = new System.Drawing.Point(119, 429);
+      this.btnClear.Name = "btnClear";
+      this.btnClear.Size = new System.Drawing.Size(75, 23);
+      this.btnClear.TabIndex = 4;
+      this.btnClear.Text = "Clear";
+      this.btnClear.UseVisualStyleBackColor = true;
+      this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+      // 
       // lblGo
       // 
       this.lblGo.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
       this.lblGo.AutoSize = true;
-      this.lblGo.Location = new System.Drawing.Point(281, 446);
+      this.lblGo.Location = new System.Drawing.Point(347, 446);
       this.lblGo.Name = "lblGo";
       this.lblGo.Size = new System.Drawing.Size(34, 13);
       this.lblGo.TabIndex = 3;
@@ -219,12 +282,12 @@
       this.txtEncodedData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.txtEncodedData.Location = new System.Drawing.Point(8, 6);
+      this.txtEncodedData.Location = new System.Drawing.Point(8, 34);
       this.txtEncodedData.MaxLength = 2147483647;
       this.txtEncodedData.Multiline = true;
       this.txtEncodedData.Name = "txtEncodedData";
       this.txtEncodedData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-      this.txtEncodedData.Size = new System.Drawing.Size(583, 417);
+      this.txtEncodedData.Size = new System.Drawing.Size(583, 389);
       this.txtEncodedData.TabIndex = 1;
       // 
       // btnShow
@@ -238,15 +301,37 @@
       this.btnShow.UseVisualStyleBackColor = true;
       this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
       // 
-      // btnClear
+      // cmbMailDrafts
       // 
-      this.btnClear.Location = new System.Drawing.Point(119, 429);
-      this.btnClear.Name = "btnClear";
-      this.btnClear.Size = new System.Drawing.Size(75, 23);
-      this.btnClear.TabIndex = 4;
-      this.btnClear.Text = "Clear";
-      this.btnClear.UseVisualStyleBackColor = true;
-      this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+      this.cmbMailDrafts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.cmbMailDrafts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cmbMailDrafts.FormattingEnabled = true;
+      this.cmbMailDrafts.Location = new System.Drawing.Point(74, 7);
+      this.cmbMailDrafts.Name = "cmbMailDrafts";
+      this.cmbMailDrafts.Size = new System.Drawing.Size(488, 21);
+      this.cmbMailDrafts.TabIndex = 9;
+      this.cmbMailDrafts.SelectedIndexChanged += new System.EventHandler(this.cmbMailDrafts_SelectedIndexChanged);
+      // 
+      // lblDraftList
+      // 
+      this.lblDraftList.AutoSize = true;
+      this.lblDraftList.Location = new System.Drawing.Point(8, 11);
+      this.lblDraftList.Name = "lblDraftList";
+      this.lblDraftList.Size = new System.Drawing.Size(60, 13);
+      this.lblDraftList.TabIndex = 10;
+      this.lblDraftList.Text = "Mail Drafts:";
+      // 
+      // btnRefreshMailDrafts
+      // 
+      this.btnRefreshMailDrafts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnRefreshMailDrafts.Image = ((System.Drawing.Image)(resources.GetObject("btnRefreshMailDrafts.Image")));
+      this.btnRefreshMailDrafts.Location = new System.Drawing.Point(568, 6);
+      this.btnRefreshMailDrafts.Name = "btnRefreshMailDrafts";
+      this.btnRefreshMailDrafts.Size = new System.Drawing.Size(23, 23);
+      this.btnRefreshMailDrafts.TabIndex = 11;
+      this.btnRefreshMailDrafts.UseVisualStyleBackColor = true;
+      this.btnRefreshMailDrafts.Click += new System.EventHandler(this.btnRefreshMailDrafts_Click);
       // 
       // frmMain
       // 
@@ -255,7 +340,7 @@
       this.ClientSize = new System.Drawing.Size(607, 510);
       this.Controls.Add(this.tabTop);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.MinimumSize = new System.Drawing.Size(350, 300);
+      this.MinimumSize = new System.Drawing.Size(600, 500);
       this.Name = "frmMain";
       this.Text = "Data Transformation";
       this.tabTop.ResumeLayout(false);
@@ -286,6 +371,13 @@
     private System.Windows.Forms.Button btnShow;
     private System.Windows.Forms.Label lblFileSize;
     private System.Windows.Forms.Button btnClear;
+    private System.Windows.Forms.Label lblPassword;
+    private System.Windows.Forms.TextBox txtPassword;
+    private System.Windows.Forms.Label lblDePassword;
+    private System.Windows.Forms.TextBox txtDePassword;
+    private System.Windows.Forms.Button btnRefreshMailDrafts;
+    private System.Windows.Forms.Label lblDraftList;
+    private System.Windows.Forms.ComboBox cmbMailDrafts;
   }
 }
 

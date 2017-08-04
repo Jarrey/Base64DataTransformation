@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Outlook;
+using Exception = System.Exception;
 
 namespace DataTransformation
 {
@@ -20,6 +22,8 @@ namespace DataTransformation
     private FileInfo SelectedOriginalFile { get; set; }
     private FileInfo SelectedDataFile { get; set; }
     #endregion
+
+    #region Event Handlers
 
     private void btnOpenFile_Click(object sender, EventArgs e)
     {
@@ -50,15 +54,17 @@ namespace DataTransformation
       }
 
       byte[] filedata = File.ReadAllBytes(SelectedOriginalFile.FullName);
-      var data = SelectedOriginalFile.Extension + "|" + Convert.ToBase64String(filedata);
+      var data = SelectedOriginalFile.Extension + "|" + EncryptionTool.Encrypt(txtPassword.Text, filedata);
       txtData.Text = data.Substring(0, Math.Min(data.Length, 5000));
 
       // Do actions
+      // Save to local clipboard
       if (chkClipboard.Checked)
       {
         Clipboard.SetText(data);
       }
 
+      // Save as text file locally
       if (chkSaveTxtFile.Checked)
       {
         using (var savefile = new SaveFileDialog { OverwritePrompt = true, Filter = @"Text File|*.txt", DefaultExt = ".txt" })
@@ -70,13 +76,10 @@ namespace DataTransformation
         }
       }
 
+      // Save to Outlook draft mail, that can be access via Web Mail
       if (chkSaveDraftMail.Checked)
       {
-        var outlook = new Microsoft.Office.Interop.Outlook.Application();
-        MailItem mail = outlook.CreateItem(OlItemType.olMailItem);
-        mail.Subject = DateTime.Now + " - " + SelectedOriginalFile.Name;
-        mail.Body = data;
-        mail.Save();
+        OutlookDraftBoxTool.SaveAsDraft(SelectedOriginalFile.Name, data);
       }
     }
 
@@ -114,10 +117,39 @@ namespace DataTransformation
       {
         if (savefile.ShowDialog() == DialogResult.OK)
         {
-          File.WriteAllBytes(savefile.FileName, Convert.FromBase64String(data));
+          try
+          {
+            File.WriteAllBytes(savefile.FileName, EncryptionTool.Decrypt(txtDePassword.Text, data));
+          }
+          catch (Exception ex)
+          {
+            MessageBox.Show(ex.Message, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          }
         }
       }
     }
+
+    private void btnClear_Click(object sender, EventArgs e)
+    {
+      txtEncodedData.Clear();
+    }
+
+    private void btnRefreshMailDrafts_Click(object sender, EventArgs e)
+    {
+      cmbMailDrafts.DisplayMember = "Subject";
+      cmbMailDrafts.DataSource = OutlookDraftBoxTool.RetrieveDraftMails().ToList();
+    }
+
+    private void cmbMailDrafts_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      var draftMail =cmbMailDrafts.SelectedItem as DraftMail;
+      if (draftMail != null)
+      {
+        txtEncodedData.Text = draftMail.Body;
+      }
+    }
+
+    #endregion
 
     private void ParseDataExtension(string d, ref string data, ref string ext)
     {
@@ -131,11 +163,6 @@ namespace DataTransformation
       {
         data = ds[0];
       }
-    }
-
-    private void btnClear_Click(object sender, EventArgs e)
-    {
-      txtEncodedData.Clear();
     }
   }
 }
